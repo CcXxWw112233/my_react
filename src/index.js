@@ -48,6 +48,18 @@ class Main extends React.Component {
         console.log('组件更新完成')
     }
     componentDidMount() {
+        for (let i = 0; i < 10; i++) {
+            this.setState((prevState, prevProps) => {
+                console.log(prevState, 'a')
+                return {
+                    number: prevState.number + 1
+                }
+            })
+            // this.setState({
+            //     number: this.state.number + 1
+            // })
+        }
+
         console.log('组件加载完成')
     }
     handleClick() {

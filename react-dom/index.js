@@ -5,8 +5,8 @@ const ReactDom = {
 }
 
 function render(vnode, container, dom) {
-    return diff(dom, vnode, container)
-    // return container.appendChild(_render(vnode))
+    // return diff(dom, vnode, container)
+    return container.appendChild(_render(vnode))
 }
 
 function _render(vnode) {
@@ -47,8 +47,8 @@ function _render(vnode) {
 export function renderComponent(comp) {
     let base
     const renderer = comp.render()
-    // base = _render(renderer) //不用diff的时候
-    base = diffNode(comp.base, renderer)
+    base = _render(renderer) //不用diff的时候
+    // base = diffNode(comp.base, renderer)
     if (comp.base && comp.componentWillUpdate) {
         comp.componentWillUpdate()
     }
