@@ -9,11 +9,15 @@ function defer(fn) {
 const setStateQueue = []  //保存statechange队列
 const renderQueue = []  //保存当前组件
 // 清空队列
-export function enquequeSetState(stateChange, component) {
+export function enquequeSetState(stateChange, component, calback) {
 
     // 
     if (setStateQueue.length === 0) {
-        defer(flush)
+        defer(flush).then((res) => {
+            if (typeof calback === 'function') {
+                calback()
+            }
+        })
     }
 
     //  短时间内合并多个setState

@@ -36,35 +36,37 @@ class Main extends React.Component {
         }
     }
     componentWillMount() {
-        console.log('组件将要加载')
+        // console.log('组件将要加载')
     }
     componentWillReceiveProps(props) {
-        console.log('props')
+        // console.log('props')
     }
     componentWillUpdate() {
-        console.log('组件将要更新')
+        // console.log('组件将要更新')
     }
     componentDidUpdate() {
-        console.log('组件更新完成')
+        // console.log('组件更新完成')
     }
     componentDidMount() {
         for (let i = 0; i < 10; i++) {
-            this.setState((prevState, prevProps) => {
-                console.log(prevState, 'a')
-                return {
-                    number: prevState.number + 1
-                }
-            })
+            // this.setState((prevState, prevProps) => {
+            //     console.log(prevState.number, 'a')
+            //     return {
+            //         number: prevState.number + 1
+            //     }
+            // })
             // this.setState({
             //     number: this.state.number + 1
             // })
         }
 
-        console.log('组件加载完成')
+        // console.log('组件加载完成')
     }
     handleClick() {
         this.setState({
             number: this.state.number + 1
+        }, () => {
+            console.log(this.state.number)
         })
     }
     render() {

@@ -8,12 +8,12 @@ class Component {
 
     }
     // 异步setstate 思路 ：队列
-    setState(stateChange) {
+    setState(stateChange, calback) {
         // // 直接覆盖
         // Object.assign(this.state, stateChange)
         // // 渲染组件
         // renderComponent(this)
-        enquequeSetState(stateChange, this)
+        enquequeSetState(stateChange, this, calback)
     }
 }
 
