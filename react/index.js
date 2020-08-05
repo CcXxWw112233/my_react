@@ -3,7 +3,8 @@ function createElement(tag, attrs, ...childrens) {
     return {
         tag,
         attrs,
-        childrens
+        childrens,
+        key: attrs ? attrs.key : null
     }
 }
 

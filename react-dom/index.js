@@ -1,11 +1,12 @@
 import Component from '../react/component'
-
+import { diff, diffNode } from './diff.js'
 const ReactDom = {
     render
 }
 
-function render(vnode, container) {
-    return container.appendChild(_render(vnode))
+function render(vnode, container, dom) {
+    return diff(dom, vnode, container)
+    // return container.appendChild(_render(vnode))
 }
 
 function _render(vnode) {
@@ -46,7 +47,8 @@ function _render(vnode) {
 export function renderComponent(comp) {
     let base
     const renderer = comp.render()
-    base = _render(renderer)
+    // base = _render(renderer) //不用diff的时候
+    base = diffNode(comp.base, renderer)
     if (comp.base && comp.componentWillUpdate) {
         comp.componentWillUpdate()
     }
@@ -66,7 +68,7 @@ export function renderComponent(comp) {
     comp.base = base
 }
 
-function setComponentProps(comp, props) {
+export function setComponentProps(comp, props) {
     if (!comp.base) { //当组件实例还没有挂载的时候
         if (comp.componentWillMount) comp.componentWillMount()
     } else if (comp.componentWillReceiveProps) {
@@ -75,7 +77,7 @@ function setComponentProps(comp, props) {
     comp.props = props
     renderComponent(comp)
 }
-function ceateComponent(comp, props) {
+export function ceateComponent(comp, props) {
     let inst;
     // 如果是类定义的组件，则创建实例，返回 class A extends React.Component
     if (comp.prototype && comp.prototype.render) {
@@ -91,7 +93,7 @@ function ceateComponent(comp, props) {
     return inst
 }
 
-function _setAttribute(dom, key, value) {
+export function _setAttribute(dom, key, value) {
     // 将属性名className转化成class
     if (key === 'className') {
         key = 'class'
