@@ -1,4 +1,4 @@
-
+import Component from './component'
 function createElement(tag, attrs, ...childrens) {
     return {
         tag,
@@ -8,7 +8,8 @@ function createElement(tag, attrs, ...childrens) {
 }
 
 const React = {
-    createElement
+    createElement,
+    Component
 }
 
 export default React;
