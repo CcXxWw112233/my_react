@@ -10,6 +10,7 @@ function render(vnode, container) {
 
 function _render(vnode) {
     if (vnode === undefined || vnode === null || typeof vnode === 'boolean') return ''
+    if (typeof vnode === "number") vnode = String(vnode)
     //如果是字符串
     if (typeof vnode === 'string') {
         //创建文本节点
@@ -42,14 +43,35 @@ function _render(vnode) {
     return dom
 }
 
-function renderComponent(comp) {
+export function renderComponent(comp) {
     let base
     const renderer = comp.render()
     base = _render(renderer)
+    if (comp.base && comp.componentWillUpdate) {
+        comp.componentWillUpdate()
+    }
+    if (comp.base) {
+        if (comp.componentDidUpdate) {
+            comp.componentDidUpdate()
+        }
+    } else if (comp.componentDidMount) {
+        comp.componentDidMount()
+    }
+
+    // 作state修改后，节点替换
+    if (comp.base && comp.base.parentNode) {
+        comp.base.parentNode.replaceChild(base, comp.base)
+    }
+
     comp.base = base
 }
 
 function setComponentProps(comp, props) {
+    if (!comp.base) { //当组件实例还没有挂载的时候
+        if (comp.componentWillMount) comp.componentWillMount()
+    } else if (comp.componentWillReceiveProps) {
+        comp.componentWillReceiveProps()
+    }
     comp.props = props
     renderComponent(comp)
 }
