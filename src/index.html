@@ -1,16 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>my react</title>
-</head>
+  </head>
 
-<body>
-    <div id='root'></div>
-</body>
-<script src="./index.js"></script>
+  <body>
+    <div id="root"></div>
+    <div
+      id="contain"
+      style="width: 0; height: 30px; background-color: blue"
+    ></div>
+    <button id="button">开始</button>
+    <button id="button2">截止</button>
+  </body>
+  <!-- <script src="./index.js"></script> -->
+  <script>
+    let contain = document.getElementById("contain");
+    let button = document.getElementById("button");
+    let button2 = document.getElementById("button2");
 
-
+    let startTime;
+    let rAFID;
+    function progress(params) {
+      contain.style.width = contain.offsetWidth + 1 + "px";
+      contain.innerHTML = contain.offsetWidth + "%";
+      if (contain.offsetWidth < 100) {
+        console.log(Date.now() - startTime + "ms");
+        startTime = Date.now();
+        rAFID = requestAnimationFrame(progress);
+      }
+    }
+    button.onclick = function () {
+      contain.style.width = 0;
+      startTime = Date.now();
+      rAFID = requestAnimationFrame(progress);
+    };
+    button2.onclick = function () {
+        cancelAnimationFrame(rAFID)
+    };
+  </script>
 </html>
